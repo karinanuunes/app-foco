@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Menu from "@/components/ui/menu";
 import CalendarBox from "./(components)/calendarCard";
 import Pomodoro from "./(components)/pomodoro";
@@ -10,31 +11,44 @@ import DialogTask from "./(components)/dialogTask";
 import Image from "next/image";
 import StudySpreadsheet from "./(components)/studySpreadsheet";
 
-export default function DashboardPage() {
-  const storedStudies = localStorage.getItem("studies");
-  const studyList = storedStudies ? JSON.parse(storedStudies) : [];
+interface IStudy {
+  name: string;
+  time: string;
+  date: string;
+}
 
-  const today = new Date().toLocaleDateString();
-  const day = parseInt(today.split("/")[0]);
-  const lastWeek = new Date(new Date().setDate(day - 7)).toLocaleDateString();
-  const lastDay = parseInt(lastWeek.split("/")[0]);
+export default function DashboardPage() {
+  const [studyList, setStudyList] = useState<IStudy[]>([]);
+  const [today, setToday] = useState<string>("");
+
+  useEffect(() => {
+    const storedStudies = localStorage.getItem("studies");
+    const studyList = storedStudies ? JSON.parse(storedStudies) : [];
+    setStudyList(studyList);
+
+    const todayDate = new Date().toLocaleDateString();
+    setToday(todayDate);
+  }, []);
+
+  if (!today) return null;
+
+  const todayDate = new Date(today);
+  const startOfWeek = new Date(todayDate);
+  startOfWeek.setDate(todayDate.getDate() - todayDate.getDay());
+
+  const endOfWeek = new Date(todayDate);
+  endOfWeek.setDate(todayDate.getDate() + (6 - todayDate.getDay()));
 
   const countToday = studyList
-    .filter((study: { date: string }) => study.date === today)
-    .reduce(
-      (acc: number, study: { time: string }) => acc + parseInt(study.time),
-      0
-    );
+    .filter((study) => study.date === today)
+    .reduce((acc, study) => acc + parseInt(study.time), 0);
 
   const countWeek = studyList
-    .filter(
-      (study: { date: string }) =>
-        study.date === today || parseInt(study.date.split("/")[0]) > lastDay
-    )
-    .reduce(
-      (acc: number, study: { time: string }) => acc + parseInt(study.time),
-      0
-    );
+    .filter((study) => {
+      const studyDate = new Date(study.date);
+      return studyDate >= startOfWeek || studyDate <= endOfWeek;
+    })
+    .reduce((acc, study) => acc + parseInt(study.time), 0);
 
   return (
     <main className="flex bg-[#f9f9f9]">
