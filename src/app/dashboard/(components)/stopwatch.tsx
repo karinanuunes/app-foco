@@ -3,7 +3,7 @@
 import { CirclePlay, CircleStop, PauseCircle } from "lucide-react";
 import { useState, useRef } from "react";
 
-const Pomodoro = () => {
+const Stopwatch = () => {
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -43,7 +43,7 @@ const Pomodoro = () => {
 
   return (
     <div className="flex flex-col p-6 gap-1 bg-white rounded-3xl">
-      <span className="text-2xl font-medium">Pomodoro</span>
+      <span className="text-2xl font-medium">Cronômetro</span>
       <div className="flex items-center justify-between">
         <span className="font-medium text-4xl text-center">
           {transformTime(time)}
@@ -72,4 +72,4 @@ const Pomodoro = () => {
   );
 };
 
-export default Pomodoro;
+export default Stopwatch;

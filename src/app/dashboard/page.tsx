@@ -1,16 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Menu from "@/components/ui/menu";
 import CalendarBox from "./(components)/calendarCard";
-import Pomodoro from "./(components)/pomodoro";
 import CounterHoursBar from "./(components)/counterHoursBar";
 import Tasks from "./(components)/tasks";
 import DropdownProfile from "./(components)/dropdownProfile";
 import DialogTask from "./(components)/dialogTask";
-import Image from "next/image";
 import StudySpreadsheet from "./(components)/studySpreadsheet";
 import { Search } from "lucide-react";
+import Stopwatch from "./(components)/stopwatch";
 
 interface IStudy {
   name: string;
@@ -98,7 +96,7 @@ export default function DashboardPage() {
           <span>Adicionar novo estudo</span>
           <DialogTask />
         </div>
-        <Pomodoro />
+        <Stopwatch />
         <CalendarBox />
       </div>
     </div>
