@@ -1,38 +1,68 @@
 import Link from "next/link";
+import {
+  Bolt,
+  ChartNoAxesCombined,
+  Clock,
+  LayoutDashboard,
+  LogOut,
+  NotepadText,
+  Pencil,
+} from "lucide-react";
 
 const Menu = () => {
   return (
-    <div className="w-64 flex flex-col gap-12 py-12 pl-10 bg-orange-800 h-lvh mt-2 ml-2 rounded-t-3xl">
-      <h1 className="font-extrabold text-3xl text-white">FOCO.</h1>
+    <div className="w-64 flex flex-col gap-12 py-12 bg-orange-800 h-lvh mt-2 ml-2 rounded-t-3xl">
+      <h1 className="font-extrabold text-3xl text-white pl-10">FOCO.</h1>
       <div className="flex flex-col flex-1">
-        <nav className="flex flex-col gap-6">
+        <nav className="flex flex-col">
           <Link
-            href={"/"}
-            className="font-medium text-white flex items-center gap-2"
+            href={"/dashboard"}
+            className="text-sm font-medium text-white flex items-center gap-2 pl-6 py-3 mx-3 rounded-[64px] hover:bg-[#f9f9f9] hover:text-orange-800"
           >
-            <img src="/dashboard.svg" alt="" />
+            <LayoutDashboard />
             VISÃO GERAL
           </Link>
           <Link
             href={"/"}
-            className="font-medium text-white flex items-center gap-2"
+            className="text-sm font-medium text-white flex items-center gap-2 pl-6 py-3 mx-3 rounded-[64px] hover:bg-[#f9f9f9] hover:text-orange-800"
           >
-            <img src="/stats.svg" alt="" />
+            <Pencil />
+            METAS & TAREFAS
+          </Link>
+          <Link
+            href={"/"}
+            className="text-sm font-medium text-white flex items-center gap-2 pl-6 py-3 mx-3 rounded-[64px] hover:bg-[#f9f9f9] hover:text-orange-800"
+          >
+            <NotepadText />
+            PLANILHA
+          </Link>
+          <Link
+            href={"/"}
+            className="text-sm font-medium text-white flex items-center gap-2 pl-6 py-3 mx-3 rounded-[64px] hover:bg-[#f9f9f9] hover:text-orange-800"
+          >
+            <Clock />
+            POMODORO
+          </Link>
+          <Link
+            href={"/"}
+            className="text-sm font-medium text-white flex items-center gap-2 pl-6 py-3 mx-3 rounded-[64px] hover:bg-[#f9f9f9] hover:text-orange-800"
+          >
+            <ChartNoAxesCombined />
             RELATÓRIOS
           </Link>
           <Link
             href={"/"}
-            className="font-medium text-white flex items-center gap-2"
+            className="text-sm font-medium text-white flex items-center gap-2 pl-6 py-3 mx-3 rounded-[64px] hover:bg-[#f9f9f9] hover:text-orange-800"
           >
-            <img src="/config.svg" alt="" />
+            <Bolt />
             CONFIGURAÇÃO
           </Link>
         </nav>
         <Link
           href={"/"}
-          className="font-medium text-white flex items-center gap-2 mt-auto"
+          className="text-sm font-medium text-white flex items-center justify-center gap-2 mt-auto"
         >
-          <img src="/logout.svg" alt="" />
+          <LogOut />
           SAIR
         </Link>
       </div>
