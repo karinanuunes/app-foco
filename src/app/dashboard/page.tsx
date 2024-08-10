@@ -21,6 +21,12 @@ export default function DashboardPage() {
   const [studyList, setStudyList] = useState<IStudy[]>([]);
   const [today, setToday] = useState<string>("");
 
+  const getTasks = localStorage.getItem("tasks");
+  const storagedTasks = getTasks ? JSON.parse(getTasks) : [];
+
+  const getGoals = localStorage.getItem("goals");
+  const storagedGoals = getGoals ? JSON.parse(getGoals) : [];
+
   useEffect(() => {
     const storedStudies = localStorage.getItem("studies");
     const studyList = storedStudies ? JSON.parse(storedStudies) : [];
@@ -51,8 +57,7 @@ export default function DashboardPage() {
     .reduce((acc, study) => acc + parseInt(study.time), 0);
 
   return (
-    <main className="flex bg-[#f9f9f9]">
-      <Menu />
+    <>
       <div className="flex flex-col flex-1 p-12 gap-8">
         <div className="flex flex-col w-full h-fit p-6 bg-white rounded-3xl">
           <span className="text-2xl">
@@ -65,19 +70,14 @@ export default function DashboardPage() {
           <CounterHoursBar week minutes={countWeek} />
         </div>
         <div className="flex justify-center gap-12">
-          <Tasks
-            taskName="Metas do mês"
-            tasks={[
-              "Ler Código Limpo",
-              "Terminar Fundamentos de Engenharia de Software",
-              "Repassar matéria de Design de Interação",
-              "Ler Código Limpo",
-            ]}
-          />
-          <Tasks
-            taskName="Tarefas da semana"
-            tasks={["Entregar Aplicativo Foco", "Decidir projeto da faculdade"]}
-          />
+          <div className="flex flex-col w-full h-full p-6 gap-3 bg-white rounded-3xl">
+            <span className="text-2xl font-medium">Metas do mês</span>
+            <Tasks tasks={storagedTasks} />
+          </div>
+          <div className="flex flex-col w-full h-full p-6 gap-3 bg-white rounded-3xl">
+            <span className="text-2xl font-medium">Tarefas da semana</span>
+            <Tasks tasks={storagedGoals} />
+          </div>
         </div>
         <StudySpreadsheet />
       </div>
@@ -96,6 +96,6 @@ export default function DashboardPage() {
         <Pomodoro />
         <CalendarBox />
       </div>
-    </main>
+    </>
   );
 }
