@@ -8,6 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Plus } from "lucide-react";
 import { useState } from "react";
 
 const DialogTask = () => {
@@ -41,8 +42,8 @@ const DialogTask = () => {
 
   return (
     <Dialog>
-      <DialogTrigger className="bg-white text-orange-800 px-3 py-1 rounded-xl text-xl">
-        +
+      <DialogTrigger className="bg-white text-orange-800 p-2 rounded-2xl text-xl">
+        <Plus />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
