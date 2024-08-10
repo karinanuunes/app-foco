@@ -18,19 +18,23 @@ interface IStudy {
 }
 
 export default function DashboardPage() {
-  const [studyList, setStudyList] = useState<IStudy[]>([]);
+  const [studies, setStudies] = useState<IStudy[]>([]);
   const [today, setToday] = useState<string>("");
-
-  const getTasks = localStorage.getItem("tasks");
-  const storagedTasks = getTasks ? JSON.parse(getTasks) : [];
-
-  const getGoals = localStorage.getItem("goals");
-  const storagedGoals = getGoals ? JSON.parse(getGoals) : [];
+  const [tasks, setTasks] = useState([]);
+  const [goals, setGoals] = useState([]);
 
   useEffect(() => {
+    const getTasks = localStorage.getItem("tasks");
+    const storagedTasks = getTasks ? JSON.parse(getTasks) : [];
+    setTasks(storagedTasks);
+
+    const getGoals = localStorage.getItem("goals");
+    const storagedGoals = getGoals ? JSON.parse(getGoals) : [];
+    setGoals(storagedGoals);
+
     const storedStudies = localStorage.getItem("studies");
-    const studyList = storedStudies ? JSON.parse(storedStudies) : [];
-    setStudyList(studyList);
+    const studies = storedStudies ? JSON.parse(storedStudies) : [];
+    setStudies(studies);
 
     const todayDate = new Date().toLocaleDateString();
     setToday(todayDate);
@@ -45,11 +49,11 @@ export default function DashboardPage() {
   const endOfWeek = new Date(todayDate);
   endOfWeek.setDate(todayDate.getDate() + (6 - todayDate.getDay()));
 
-  const countToday = studyList
+  const countToday = studies
     .filter((study) => study.date === today)
     .reduce((acc, study) => acc + parseInt(study.time), 0);
 
-  const countWeek = studyList
+  const countWeek = studies
     .filter((study) => {
       const studyDate = new Date(study.date);
       return studyDate >= startOfWeek || studyDate <= endOfWeek;
@@ -72,11 +76,11 @@ export default function DashboardPage() {
         <div className="flex justify-center gap-12">
           <div className="flex flex-col w-full h-full p-6 gap-3 bg-white rounded-3xl">
             <span className="text-2xl font-medium">Metas do mês</span>
-            <Tasks tasks={storagedTasks} />
+            <Tasks tasks={goals} />
           </div>
           <div className="flex flex-col w-full h-full p-6 gap-3 bg-white rounded-3xl">
             <span className="text-2xl font-medium">Tarefas da semana</span>
-            <Tasks tasks={storagedGoals} />
+            <Tasks tasks={tasks} />
           </div>
         </div>
         <StudySpreadsheet />

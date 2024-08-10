@@ -2,38 +2,40 @@
 
 import { Plus } from "lucide-react";
 import Tasks from "../dashboard/(components)/tasks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ToDoListPage = () => {
   const [task, setTask] = useState("");
-  const getTasks = localStorage.getItem("tasks");
-  const storagedTasks = getTasks ? JSON.parse(getTasks) : [];
-
   const [goal, setGoal] = useState("");
-  const getGoals = localStorage.getItem("goals");
-  const storagedGoals = getGoals ? JSON.parse(getGoals) : [];
+  const [storedTasks, setStoredTasks] = useState<string[]>([]);
+  const [storedGoals, setStoredGoals] = useState<string[]>([]);
 
-  const tasks: string[] = [];
-  const goals: string[] = [];
+  useEffect(() => {
+    const getTasks = localStorage.getItem("tasks");
+    const storagedTasks = getTasks ? JSON.parse(getTasks) : [];
+    setStoredTasks(storagedTasks);
+
+    const getGoals = localStorage.getItem("goals");
+    const storagedGoals = getGoals ? JSON.parse(getGoals) : [];
+    setStoredGoals(storagedGoals);
+  }, []);
 
   const handleTask = () => {
-    tasks.push(task);
-    storageTasksLocal(tasks);
-    setTask("");
+    if (task.trim()) {
+      const updatedTasks = [...storedTasks, task];
+      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+      setStoredTasks(updatedTasks);
+      setTask("");
+    }
   };
 
   const handleGoal = () => {
-    goals.push(goal);
-    storageGoalsLocal(goals);
-    setGoal("");
-  };
-
-  const storageTasksLocal = (tasks: string[]) => {
-    localStorage.setItem("tasks", JSON.stringify([...storagedTasks, ...tasks]));
-  };
-
-  const storageGoalsLocal = (goals: string[]) => {
-    localStorage.setItem("goals", JSON.stringify([...storagedGoals, ...goals]));
+    if (goal.trim()) {
+      const updatedGoals = [...storedGoals, goal];
+      localStorage.setItem("goals", JSON.stringify(updatedGoals));
+      setStoredGoals(updatedGoals);
+      setGoal("");
+    }
   };
 
   return (
@@ -58,7 +60,7 @@ const ToDoListPage = () => {
             </button>
           </div>
         </div>
-        <Tasks tasks={storagedGoals} />
+        <Tasks tasks={storedGoals} />
       </div>
       <div className="flex flex-col flex-1 mt-12 p-6 gap-8 w-full h-fit bg-white rounded-3xl">
         <div className="flex flex-col gap-6">
@@ -80,7 +82,7 @@ const ToDoListPage = () => {
             </button>
           </div>
         </div>
-        <Tasks tasks={storagedTasks} />
+        <Tasks tasks={storedTasks} />
       </div>
     </>
   );
