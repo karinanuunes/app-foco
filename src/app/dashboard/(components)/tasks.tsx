@@ -3,11 +3,10 @@
 import { useState } from "react";
 
 interface TasksProps {
-  taskName: string;
   tasks: string[];
 }
 
-const Tasks = ({ taskName, tasks }: TasksProps) => {
+const Tasks = ({ tasks }: TasksProps) => {
   const [selectedTaskIds, setSelectedTaskIds] = useState<number[]>([]);
 
   const handleUpdateTask = (id: number) => {
@@ -19,8 +18,7 @@ const Tasks = ({ taskName, tasks }: TasksProps) => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full p-6 gap-3 bg-white rounded-3xl">
-      <span className="text-2xl font-medium">{taskName}</span>
+    <>
       {tasks.map((task, id) => (
         <div className="flex items-center gap-2" key={id}>
           <button
@@ -38,7 +36,7 @@ const Tasks = ({ taskName, tasks }: TasksProps) => {
           </span>
         </div>
       ))}
-    </div>
+    </>
   );
 };
 
