@@ -7,7 +7,7 @@ const CalendarCard = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
 
   return (
-    <div className="flex flex-col p-6 gap-3 bg-white rounded-3xl">
+    <div className="flex flex-col p-6 gap-3 bg-white rounded-3xl w-fit">
       <span className="text-2xl font-medium">Calendário</span>
       <Calendar
         mode="single"

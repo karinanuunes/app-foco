@@ -11,7 +11,7 @@ import {
 
 const Menu = () => {
   return (
-    <div className="w-64 flex flex-col gap-12 py-12 bg-orange-800 h-lvh mt-2 ml-2 rounded-t-3xl">
+    <div className="w-64 flex flex-col gap-12 py-12 bg-orange-800 mt-2 ml-2 rounded-t-3xl">
       <h1 className="font-extrabold text-3xl text-white pl-10">FOCO.</h1>
       <div className="flex flex-col flex-1">
         <nav className="flex flex-col">

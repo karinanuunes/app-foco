@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={montserrat.className}>
-        <main className="flex bg-[#f9f9f9] h-svh">
+        <main className="flex bg-[#f9f9f9] h-screen w-screen">
           <Menu />
           {children}
         </main>
