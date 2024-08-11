@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import Link from "next/link";
+import { handleDelete, handleEdit } from "../../page";
 
 export type Study = {
   id: string;
@@ -86,6 +88,10 @@ export const columns: ColumnDef<Study>[] = [
     header: "Tempo concluído",
   },
   {
+    accessorKey: "date",
+    header: "Dia realizado",
+  },
+  {
     accessorKey: "priority",
     header: ({ column }) => {
       return (
@@ -124,16 +130,22 @@ export const columns: ColumnDef<Study>[] = [
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
+              <span className="sr-only">Abrir menu</span>
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <DropdownMenuItem>Visualizar</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href={`/reports/${study.id}`}>Visualizar</Link>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Editar</DropdownMenuItem>
-            <DropdownMenuItem>Deletar</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleEdit(study.id)}>
+              Editar
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleDelete(study.id)}>
+              Deletar
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

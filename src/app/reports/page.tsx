@@ -1,41 +1,44 @@
+"use client";
+
 import { DataTable } from "./(components)/table/data-table";
 import { columns, Study } from "./(components)/table/columns";
-import * as uuid from "uuid";
+import { useEffect, useState } from "react";
 
-const data: Study[] = [
-  {
-    id: uuid.v4(),
-    name: "Matemática",
-    category: "Exatas",
-    timeToComplete: 180,
-    completedTime: 60,
-    priority: "Alta",
-    status: "Pendente",
-    date: new Date().toLocaleDateString(),
-  },
-  {
-    id: uuid.v4(),
-    name: "Informática",
-    category: "Exatas",
-    timeToComplete: 180,
-    completedTime: 180,
-    priority: "Baixa",
-    status: "Concluído",
-    date: new Date().toLocaleDateString(),
-  },
-  {
-    id: uuid.v4(),
-    name: "Português",
-    category: "Humanas",
-    timeToComplete: 180,
-    completedTime: 0,
-    priority: "Alta",
-    status: "Incompleto",
-    date: new Date().toLocaleDateString(),
-  },
-];
+export const handleEdit = (id: string) => {
+  const studiesStorage = localStorage.getItem("studies");
+  const studies = studiesStorage ? JSON.parse(studiesStorage) : [];
+
+  studies.map((study: Study) => {
+    const state = study.id === id ? "selected" : "not-selected";
+    if (state === "selected") {
+      console.log(`TESTE: Estudo ${study.name} editado com sucesso!`);
+    }
+  });
+};
+
+export const handleDelete = (id: string) => {
+  const studiesStorage = localStorage.getItem("studies");
+  const studies = studiesStorage ? JSON.parse(studiesStorage) : [];
+
+  studies.map((study: Study) => {
+    const state = study.id === id ? "selected" : "not-selected";
+    if (state === "selected") {
+      console.log(`TESTE: Estudo ${study.name} deletado com sucesso!`);
+    }
+  });
+};
 
 const ReportsPage = () => {
+  const [data, setData] = useState<Study[]>([]);
+
+  useEffect(() => {
+    const studiesStorage = localStorage.getItem("studies");
+    const studies = studiesStorage ? JSON.parse(studiesStorage) : [];
+    setData(studies.reverse());
+
+    if (!studiesStorage) localStorage.setItem("studies", JSON.stringify([]));
+  }, []);
+
   return (
     <div className="flex flex-1 m-12 gap-8">
       <div className="flex flex-col gap-4 w-full h-full p-6 bg-white rounded-3xl">
