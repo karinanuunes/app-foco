@@ -37,7 +37,7 @@ const Menu = () => {
             PLANILHA
           </Link>
           <Link
-            href={"/"}
+            href={"/pomodoro"}
             className="text-sm font-medium text-white flex items-center gap-2 pl-6 py-3 mx-3 rounded-[64px] hover:bg-[#f9f9f9] hover:text-orange-800"
           >
             <Clock />
