@@ -1,5 +1,6 @@
 "use client";
 
+import { transformTime } from "@/utils/transformTime";
 import { CirclePlay, CircleStop, PauseCircle } from "lucide-react";
 import { useState, useRef } from "react";
 
@@ -7,14 +8,6 @@ const Stopwatch = () => {
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-
-  const transformTime = (time: number) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = time % 60;
-    return `${minutes.toString().padStart(2, "0")}:${seconds
-      .toString()
-      .padStart(2, "0")}`;
-  };
 
   const handlePlay = () => {
     if (isRunning) return;
