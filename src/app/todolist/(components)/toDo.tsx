@@ -25,7 +25,7 @@ const ToDo = ({ itemTitle, itemType }: ToDoProps) => {
     setStoredItems(storagedItems);
   }, [itemType]);
 
-  const handleTask = () => {
+  const handleItem = () => {
     if (item.trim()) {
       const updatedItems = [...storedItems, item];
       localStorage.setItem(itemType, JSON.stringify(updatedItems));
@@ -34,7 +34,7 @@ const ToDo = ({ itemTitle, itemType }: ToDoProps) => {
     }
   };
 
-  const handleUpdateTask = (id: number) => {
+  const handleUpdateItem = (id: number) => {
     setSelectedItemIds((prevSelectedItemIds) =>
       prevSelectedItemIds.includes(id)
         ? prevSelectedItemIds.filter((itemId) => itemId !== id)
@@ -42,19 +42,19 @@ const ToDo = ({ itemTitle, itemType }: ToDoProps) => {
     );
   };
 
-  const handleChangeTask = (id: number) => {
+  const handleChangeItem = (id: number) => {
     setEditItemId(id);
     setFocusedItem(!focusedItem);
     setNewItem(storedItems[id]);
   };
 
-  const handleSaveTask = () => {
+  const handleSaveItem = () => {
     if (editItemId !== null && newItem.trim()) {
-      const updatedTasks = storedItems.map((item, index) =>
+      const updatedItems = storedItems.map((item, index) =>
         index === editItemId ? newItem : item
       );
-      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-      setStoredItems(updatedTasks);
+      localStorage.setItem(itemType, JSON.stringify(updatedItems));
+      setStoredItems(updatedItems);
       setEditItemId(null);
       setNewItem("");
       setFocusedItem(false);
@@ -64,10 +64,10 @@ const ToDo = ({ itemTitle, itemType }: ToDoProps) => {
     }
   };
 
-  const handleDeleteTask = (id: number) => {
-    const updatedTasks = storedItems.filter((_, index) => index !== id);
-    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-    setStoredItems(updatedTasks);
+  const handleDeleteItem = (id: number) => {
+    const updatedItems = storedItems.filter((_, index) => index !== id);
+    localStorage.setItem(itemType, JSON.stringify(updatedItems));
+    setStoredItems(updatedItems);
   };
 
   return (
@@ -84,7 +84,7 @@ const ToDo = ({ itemTitle, itemType }: ToDoProps) => {
           />
           <button
             className="bg-orange-800 text-white p-3 rounded-2xl text-xl"
-            onClick={handleTask}
+            onClick={handleItem}
           >
             <Plus width={18} />
           </button>
@@ -102,7 +102,7 @@ const ToDo = ({ itemTitle, itemType }: ToDoProps) => {
                 className={`border border-orange-800 rounded-full w-4 h-4 ${
                   selectedItemIds.includes(id) ? "bg-orange-800" : ""
                 }`}
-                onClick={() => handleUpdateTask(id)}
+                onClick={() => handleUpdateItem(id)}
               ></button>
               {editItemId === id && focusedItem === true ? (
                 <div className="flex justify-between w-full">
@@ -110,10 +110,11 @@ const ToDo = ({ itemTitle, itemType }: ToDoProps) => {
                     type="text"
                     value={newItem}
                     onChange={(e) => setNewItem(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleSaveItem()}
                     className="outline-none w-full font-medium text-gray-500"
                   />
                   <div className="flex gap-2">
-                    <button onClick={handleSaveTask}>
+                    <button onClick={handleSaveItem}>
                       <Check width={18} />
                     </button>
                     <button onClick={() => setFocusedItem(false)}>
@@ -140,10 +141,10 @@ const ToDo = ({ itemTitle, itemType }: ToDoProps) => {
                   : "hidden"
               }
             >
-              <button onClick={() => handleChangeTask(id)}>
+              <button onClick={() => handleChangeItem(id)}>
                 <Settings2 width={18} />
               </button>
-              <button onClick={() => handleDeleteTask(id)}>
+              <button onClick={() => handleDeleteItem(id)}>
                 <X width={18} />
               </button>
             </div>
