@@ -28,7 +28,12 @@ const Clock = ({ initialTime }: ClockProps) => {
       setProgress(percentage);
     }
 
-    if (time === 0 && (initialTime == 1500 || initialTime == 3000)) {
+    const customStorage = localStorage.getItem("customTime");
+    const customTime = customStorage ? JSON.parse(customStorage) : null;
+    if (
+      time === 0 &&
+      (initialTime == 1500 || initialTime == 3000 || initialTime == customTime)
+    ) {
       alert("Parabéns, você conseguiu!");
       setTime(initialTime);
     }
@@ -80,13 +85,12 @@ const Clock = ({ initialTime }: ClockProps) => {
         <Progress
           value={progress}
           className={
-            initialTime == 1500 || initialTime == 3000
-              ? "bg-orange-800"
-              : "bg-blue-800"
+            initialTime == 300 || initialTime == 600
+              ? "bg-blue-800"
+              : "bg-orange-800"
           }
         />
       </div>
-
       <div className="flex justify-center gap-6">
         {isRunning ? (
           <button onClick={handlePause}>
